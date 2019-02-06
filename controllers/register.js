@@ -4,7 +4,7 @@ emailValidation = (email) => {
 }
 
 nameValidation = (name) => {
-    let nameRe = /^([a-zA-Z.\-#_*]){5,30}$/
+    let nameRe = /^\w{5,30}$/
     return !nameRe.test(name);
 }
 
