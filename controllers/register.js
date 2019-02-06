@@ -17,10 +17,10 @@ passValidation = (password) => {
 
 const handleRegister =  (req, res, db, bcrypt) => {
     const { email, name, password } = req.body;
-    console.log(emailValidation(email), nameValidation(name), passValidation(password));
     if (!email || !name || !password) {
         return res.status(400).json("incorrect form submission")
     }
+    
     if (emailValidation(email)) {
         return res.status(400).json("email invalid")
     } else if (nameValidation(name)) {
@@ -28,6 +28,7 @@ const handleRegister =  (req, res, db, bcrypt) => {
     } else if (passValidation(password)) {
         return res.status(400).json("password invalid")
     }
+    
     const hash = bcrypt.hashSync(password);
         db.transaction(trx => {
             trx.insert({

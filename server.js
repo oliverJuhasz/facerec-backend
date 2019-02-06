@@ -28,7 +28,6 @@ if (process.env.TESTING) {
     }
     });}
 
-db.select("*").from("users").then(user => console.log(user))
 app.use(bodyParser.json());
 app.use(cors())
 
