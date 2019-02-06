@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt-nodejs")
 const cors = require("cors");
@@ -9,14 +8,27 @@ const signin = require("./controllers/signin");
 const profile = require("./controllers/profile");
 const image = require("./controllers/image");
 
-const db =  knex({
-client: 'pg',
-connection: {
-    connectionString : process.env.DATABASE_URL,
-    ssl: true    
-}
-});
+const app = express();
 
+if (process.env.TESTING) {
+    var db =  knex({
+        client: 'pg',
+        connection: {
+            host : '127.0.0.1',
+            user : 'postgres',
+            password : '5642',
+            database : 'smart-brain'
+        }
+        });
+} else {var db =  knex({
+    client: 'pg',
+    connection: {
+        connectionString : process.env.DATABASE_URL,
+        ssl: true    
+    }
+    });}
+
+db.select("*").from("users").then(user => console.log(user))
 app.use(bodyParser.json());
 app.use(cors())
 
